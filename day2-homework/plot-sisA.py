@@ -19,6 +19,7 @@ Annotate plot (generalize x-axis to 10 not female_10, add title, add x- and y-ax
 #For Commit 1: Plot female data
 #For Commit 2: Add male data
 #For Commit 3: Add 2*male data (HINT: 2 * np.array( y ))
+#For Commit 4: Annotate plot (generalize x-axis to 10 not female_10, add title, add x- and y-axis labels)
 
 transcripts = np.loadtxt( "all_annotated.csv", delimiter=",", usecols=0, dtype="<U30", skiprows=1 )
 print( "transcripts: ", transcripts[0:5] )
@@ -59,12 +60,16 @@ y = expression
 ym =expressionm
 ym2 =expressionm2
 
+#Generalize x-axis labels
+
+xc = ["10", "11", "12", "13", "14A", "14B", "14C", "14D"]
+
 #Plot data
 fig, ax = plt.subplots()
 ax.set_title( "FBtr0073461" )
-ax.plot( x, y )
-ax.plot(x, ym) #add male data
-ax.plot(x, ym2) #add 2*male data
+ax.plot( xc, y , label="female")
+ax.plot(xc, ym, label="male") #add male data
+ax.plot(xc, ym2, label="male*2") #add 2*male data
 
 plt.xticks(rotation=90) #rotate x-axis labels
 ax.set_title( "Sxl (FBtr0073461)" ) #rename title
@@ -72,6 +77,8 @@ ax.set_xlabel( "Developmental Stage") #set x-axis label
 ax.set_ylabel("mRNA Abundance (RPKM)") #set y-axis label
 
 
+
+ax.legend()
 
 plt.tight_layout()
 fig.savefig( "FBtr0073461.png" )
