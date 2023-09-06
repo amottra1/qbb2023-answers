@@ -18,6 +18,7 @@ Annotate plot (generalize x-axis to 10 not female_10, add title, add x- and y-ax
 
 #For Commit 1: Plot female data
 #For Commit 2: Add male data
+#For Commit 3: Add 2*male data (HINT: 2 * np.array( y ))
 
 transcripts = np.loadtxt( "all_annotated.csv", delimiter=",", usecols=0, dtype="<U30", skiprows=1 )
 print( "transcripts: ", transcripts[0:5] )
@@ -45,20 +46,25 @@ for im in range(len(samples)):
     if "female" not in samples[im]:
         colsm.append(im)
 
+
 # Subset data of interest
 expression = data[row, cols]
 expressionm = data[row, colsm]
+
+expressionm2 = 2 * np.array(expressionm)
 
 # Prepare data
 x = samples[cols]
 y = expression
 ym =expressionm
+ym2 =expressionm2
 
 #Plot data
 fig, ax = plt.subplots()
 ax.set_title( "FBtr0073461" )
 ax.plot( x, y )
 ax.plot(x, ym) #add male data
+ax.plot(x, ym2) #add 2*male data
 
 plt.xticks(rotation=90) #rotate x-axis labels
 ax.set_title( "Sxl (FBtr0073461)" ) #rename title
