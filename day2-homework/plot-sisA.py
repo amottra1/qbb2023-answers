@@ -21,8 +21,35 @@ Annotate plot (generalize x-axis to 10 not female_10, add title, add x- and y-ax
 #For Commit 3: Add 2*male data (HINT: 2 * np.array( y ))
 #For Commit 4: Annotate plot (generalize x-axis to 10 not female_10, add title, add x- and y-axis labels)
 
-transcripts = np.loadtxt( "all_annotated.csv", delimiter=",", usecols=0, dtype="<U30", skiprows=1 )
-print( "transcripts: ", transcripts[0:5] )
+#Exercise 2
+"""Modify plot-sisA.py (do not create a new file) to load the transcripts information 
+using open() and a for loop rather than np.loadtxt(). Remember that the first line is a header 
+and should not be stored in the transcripts list. Push just your code to your git repository 
+and confirm at https://github.com that your code no longer uses np.loadtxt()."""
+
+f= open("all_annotated.csv", "r")
+
+lines=f.readlines()
+
+datalist=[]
+
+for line in lines:
+	line=line.rstrip()
+	line_list=line.split(',')
+	datalist.append((line_list))
+
+#print(datalist)
+
+transcripts=[]
+for value in datalist:
+	transcripts.append(value[0])
+
+#print(transcripts)
+
+
+#mute old way for transcripts
+"""transcripts = np.loadtxt( "all_annotated.csv", delimiter=",", usecols=0, dtype="<U30", skiprows=1 )
+print( "transcripts: ", transcripts[0:5] )"""
 
 samples = np.loadtxt( "all_annotated.csv", delimiter=",", max_rows=1, dtype="<U30" )[2:]
 print( "samples: ", samples[0:5] )
@@ -75,8 +102,6 @@ plt.xticks(rotation=90) #rotate x-axis labels
 ax.set_title( "Sxl (FBtr0073461)" ) #rename title
 ax.set_xlabel( "Developmental Stage") #set x-axis label
 ax.set_ylabel("mRNA Abundance (RPKM)") #set y-axis label
-
-
 
 ax.legend()
 
