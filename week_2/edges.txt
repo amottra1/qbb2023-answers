@@ -1,0 +1,13 @@
+TCA -> CAT
+TTC -> TCA
+ATT -> TTC
+GAT -> ATT
+TTG -> TGA
+TTA -> TAT
+ATT -> TTG
+TGA -> GAT
+TTC -> TCT
+TCT -> CTT
+CTT -> TTA
+CAT -> ATT
+TAT -> ATT
