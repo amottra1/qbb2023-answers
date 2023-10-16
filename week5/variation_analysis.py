@@ -9,7 +9,7 @@ predicted_muts=[]
 
 #not sure how to get predicted effects
 
-for line in open("head_var.vcf"):
+for line in open("annotated_var.vcf"):
     if line.startswith('#'):
         continue
     fields=[]
@@ -25,12 +25,11 @@ for line in open("head_var.vcf"):
     split_info=info.split(";")
     allele=split_info[3]
     AF=allele.split("=")
-    allele_frequency_AF.append(float(AF[1]))
+    allele_frequency_AF.append((AF[1]))
     predict_mut=split_info[-2]
     predicted_muts.append(predict_mut)
 
 effects_dict={"count_snp":0,"count_del":0}
-
 
 for value in range(len(predicted_muts)):
 	if predicted_muts[value]=="TYPE=snp":
@@ -38,13 +37,18 @@ for value in range(len(predicted_muts)):
 	elif predicted_muts[value]=="TYPE=del":
 		effects_dict["count_del"]+=1
 
-
+float_AF=[]
+for value in range(len(allele_frequency_AF)):
+	if "," in allele_frequency_AF[value]:
+		continue
+	float_AF.append(float(allele_frequency_AF[value]))
 
 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2,2)
 
 ax1.hist(read_depth_DP)
 ax1.set_title( "Read Depth" ) 
 ax1.set_xlabel("DP")
+ax1.axis([0,200,0,450000])
 ax1.set_ylabel("Frequency")
 
 ax2.hist(genotype_quality_GQ)
@@ -52,9 +56,10 @@ ax2.set_title( "Genotype Quality" )
 ax2.set_xlabel("GQ")
 ax2.set_ylabel("Frequency")
 
-ax3.hist(allele_frequency_AF)
+ax3.hist(float_AF)
 ax3.set_title( "Allele Frequency" ) 
 ax3.set_xlabel("AF")
+ax3.axis([0.0,1.0,0, 25000])
 ax3.set_ylabel("Frequency")
 
 ax4.bar(list(effects_dict.keys()), list(effects_dict.values()))
@@ -65,4 +70,4 @@ ax4.set_ylabel("Frequency")
 plt.tight_layout()
 fig.savefig( "variation.png" )
 #plt.show()
-#plt.close( fig )"""
+#plt.close( fig )
